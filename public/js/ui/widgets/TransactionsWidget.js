@@ -12,7 +12,12 @@ class TransactionsWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
-
+    // this.element = element;
+    // this.registerEvents() {
+    //   this.element.querySelector('.remove-account').onclick = e => {
+    //     e.this.removeAccount(   )
+    //   }
+    // }
   }
   /**
    * Регистрирует обработчики нажатия на

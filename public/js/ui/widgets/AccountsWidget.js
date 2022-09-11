@@ -26,7 +26,20 @@ class AccountsWidget {
    * (которые отображены в боковой колонке),
    * вызывает AccountsWidget.onSelectAccount()
    * */
-  registerEvents() {}
+  registerEvents() {
+    const createAccontNew = document.querySelectorAll('.accounts-panel');
+    createAccontNew.forEach(element => {
+        element.addEventListener('click', () => {
+            if(event.target.className.includes('label-success')) {
+                App.getModal('createAccount').open();
+            }
+            if(event.target.closest('.account')) {
+                event.preventDefault();
+                 this.onSelectAccount(event.target.closest('.account'));
+          } 
+        })
+    })
+  }
 
   /**
    * Метод доступен только авторизованным пользователям
@@ -41,7 +54,7 @@ class AccountsWidget {
   update() {
     Account.list(null, (err, resp) => {
       if (resp && resp.success) {
-        this.clear( )
+        this.clear();
         resp.data.forEach((a) => this.renderItem(a));
       }
     });
@@ -53,7 +66,7 @@ class AccountsWidget {
    * в боковой колонке
    * */
   clear() {
-    this.element.querySelectorAll('.account').forEach(e => e.remove())
+    this.element.querySelectorAll(".account").forEach((e) => e.remove());
   }
 
   /**
@@ -63,7 +76,13 @@ class AccountsWidget {
    * счёта класс .active.
    * Вызывает App.showPage( 'transactions', { account_id: id_счёта });
    * */
-  onSelectAccount(element) {}
+  onSelectAccount(element) {
+    if (this.prevActiveEl) {
+      this.prevActiveEl.classList.remove("active");
+    }
+    element.classList.add("active");
+    this.prevActiveEl = element;
+  }
 
   /**
    * Возвращает HTML-код счёта для последующего
